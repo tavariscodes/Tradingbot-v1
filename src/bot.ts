@@ -29,4 +29,8 @@ export class TradingBot {
             IF prices go up send notification to person.
         **/
     }
+
+    async propogateWatchlist() {
+        
+    }
 }

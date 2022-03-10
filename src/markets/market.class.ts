@@ -1,5 +1,5 @@
 import Alpaca from "@alpacahq/alpaca-trade-api";
-import { transformAlpacaBar } from "./markets.helpers";
+import { transformAlpacaBar, parseAccountData } from "./markets.helpers";
 
 export type MarketPlatform = Alpaca  
 
@@ -35,11 +35,16 @@ export interface MarketChartData {
     tradeCount: number;
 }
 
+export interface AccountData {
+    balance: number;
+}
+
 export abstract class Market { 
     constructor(app: MarketPlatform, marketConfigOptions: MarketConfig) {
         this.app = app;
     };
 
+    abstract getAccountData(): Promise<AccountData>
     abstract getChartData(query: MarketDataQuery): Promise<MarketChartData[]>
 }
 
@@ -70,6 +75,11 @@ export class AlpacaMarket extends Market {
         return candlestick
     }
 
-    
+    async getAccountData(): Promise<AccountData> {
+        const accountInformation = this.app.getAccount();
+        parseAccountData()
+    }
+
+    // enable retrivieng account balance.
 
 }
