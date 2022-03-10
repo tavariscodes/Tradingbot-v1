@@ -1,7 +1,11 @@
 import Alpaca from "@alpacahq/alpaca-trade-api";
-import { transformAlpacaBar, parseAccountData } from "./markets.helpers";
+import { parseAccountData, transformAlpacaBar, /* parseAccountData */ } from "./markets.helpers";
 
 export type MarketPlatform = Alpaca  
+
+export interface Market { 
+    app: MarketPlatform;
+}
 
 export interface MarketConfig {
     credentials: {
@@ -19,10 +23,6 @@ export interface MarketDataQuery {
     timeSpan: number;
 };
 
-export interface Market { 
-    app: MarketPlatform;
-}
-
 export interface MarketChartData {
     symbol: string;
     openPrice: number;
@@ -35,8 +35,33 @@ export interface MarketChartData {
     tradeCount: number;
 }
 
-export interface AccountData {
-    balance: number;
+export interface MarketAccountData {
+    accountNumber?: string;
+    status?: string;
+    currency?: string;
+    buyingPower?: string;
+    regtBuyingPower?: string;
+    nonMarginableBuyingPower?: string;
+    cash?: string;
+    accruedFees?: string;
+    multiplier?: string;
+    pendingTransferIn?: string;
+    portfolioValues?: string;
+    patternDayTrader?: boolean;
+    tradingBlocked?: boolean;
+    transfersBlocked?: boolean;
+    accountBlocked?: boolean;
+    tradeSuspendedByUser?: boolean;
+    shortingEnabled?: boolean;
+    equity?: string;
+    lastEquity?: string;
+    longMarketValue?: string;
+    shortMarketValue?: string;
+    initialMargin?: string;
+    maintenanceMargin?: string;
+    lastMaintenanceMargin?: string;
+    sma?: string;
+    daytradeCount?: string;
 }
 
 export abstract class Market { 
@@ -44,7 +69,14 @@ export abstract class Market {
         this.app = app;
     };
 
-    abstract getAccountData(): Promise<AccountData>
+    // abstract getAccountData(): Promise<AccountData>
+    /**
+     * Returns user account data
+     */
+    abstract getAccountData(): Promise<MarketAccountData>;
+    /**
+     * Returns chart data for given symbol
+     */
     abstract getChartData(query: MarketDataQuery): Promise<MarketChartData[]>
 }
 
@@ -75,11 +107,8 @@ export class AlpacaMarket extends Market {
         return candlestick
     }
 
-    async getAccountData(): Promise<AccountData> {
-        const accountInformation = this.app.getAccount();
-        parseAccountData()
+    async getAccountData(): Promise<MarketAccountData> {
+        const accountInformation = await this.app.getAccount();
+        return parseAccountData(accountInformation);
     }
-
-    // enable retrivieng account balance.
-
 }

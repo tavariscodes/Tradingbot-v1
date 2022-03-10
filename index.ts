@@ -9,12 +9,16 @@ const testBot = new AlpacaMarket({
     }
 });
 
-testBot.getChartData({
-    symbol: 'HUSA',
-    timeFrame: 'Min', 
-    timeSpan: 10,
-    startTime: new Date(2022, 2, 3, 6),
-    endTime: new Date(2022, 2, 3, 10)
-})
-.then(res => console.log(res))
-.catch(err => console.log(err));
+// testBot.getChartData({
+//     symbol: 'HUSA',
+//     timeFrame: 'Min', 
+//     timeSpan: 10,
+//     startTime: new Date(2022, 2, 3, 6),
+//     endTime: new Date(2022, 2, 3, 10)
+// })
+// .then(res => console.log(res))
+// .catch(err => console.log(err));
+
+testBot.getAccountData()
+.then(accountData => console.log(parseInt(accountData.equity) + 100))
+.catch(err => console.log(err))

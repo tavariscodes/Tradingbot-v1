@@ -11,6 +11,7 @@
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^2.12.1",
     "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
     "ta.js": "^1.7.4"
   },
   "devDependencies": {
