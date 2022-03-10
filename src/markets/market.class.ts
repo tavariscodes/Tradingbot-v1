@@ -1,10 +1,14 @@
 import Alpaca from "@alpacahq/alpaca-trade-api";
-import { AlpacaBar } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/entityv2";
+import { transformAlpacaBar } from "./markets.helpers";
 
-type MarketPlatform = ""
+export type MarketPlatform = Alpaca  
 
-export interface MarketConfig { 
-    marketPlatform: MarketPlatform;
+export interface MarketConfig {
+    credentials: {
+        application: string;
+        clientId: string;
+        clientSecret: string;
+    }
 }
 
 export interface MarketDataQuery {
@@ -16,12 +20,56 @@ export interface MarketDataQuery {
 };
 
 export interface Market { 
-    client: MarketPlatform;
+    app: MarketPlatform;
 }
 
+export interface MarketChartData {
+    symbol: string;
+    openPrice: number;
+    highPrice: number;
+    lowPrice: number;
+    closePrice: number;
+    volume: number;
+    timeStamp: string;
+    vwap: number;
+    tradeCount: number;
+}
 
-export class Market { 
+export abstract class Market { 
+    constructor(app: MarketPlatform, marketConfigOptions: MarketConfig) {
+        this.app = app;
+    };
+
+    abstract getChartData(query: MarketDataQuery): Promise<MarketChartData[]>
+}
+
+export class AlpacaMarket extends Market {
     constructor(marketConfigOptions: MarketConfig) {
-        this.client = marketConfigOptions.marketPlatform;
+        const app = new Alpaca({
+            keyId: marketConfigOptions.credentials.clientId,
+            secretKey: marketConfigOptions.credentials.clientSecret,
+            paper: true
+        });
+        super(app, marketConfigOptions);
     }
+
+    async getChartData(query: MarketDataQuery): Promise<MarketChartData[]> {
+        const candlestick: Array<MarketChartData> = [];
+        const resp = await this.app.getBarsV2(
+            query.symbol,
+            {
+                start: query.startTime.toISOString(),
+                end: query.endTime.toISOString(),
+                adjustment: 'all',
+                timeframe: query.timeSpan + query.timeFrame
+            }
+        )
+        for await (let data of resp) {
+            candlestick.push(transformAlpacaBar(data));
+        }
+        return candlestick
+    }
+
+    
+
 }

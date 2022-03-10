@@ -1,15 +1,20 @@
 import 'dotenv/config';
-import { TradingBot } from './src/bot'
+import { AlpacaMarket } from './src/markets'; 
 
-const testBot = new TradingBot({
-    market: {name: 'alpaca'},
+const testBot = new AlpacaMarket({
     credentials: {
         application: 'alpaca',
-        clientId: 'PK2G3155G3JV5YB6FHE7',
-        clientSecret: 'DtsnvF2YkxQgXoRbQW96lCekyxjWfaXaSljDcMjN',
+        clientId: process.env.ALPACA_KEY_ID,
+        clientSecret:  process.env.ALPACA_SECRET_KEY
     }
 });
 
-testBot.enterTrade()
+testBot.getChartData({
+    symbol: 'HUSA',
+    timeFrame: 'Min', 
+    timeSpan: 10,
+    startTime: new Date(2022, 2, 3, 6),
+    endTime: new Date(2022, 2, 3, 10)
+})
 .then(res => console.log(res))
 .catch(err => console.log(err));
