@@ -30,7 +30,5 @@ export class TradingBot {
         **/
     }
 
-    async propogateWatchlist() {
-        
-    }
+    async propogateWatchlist() {}
 }

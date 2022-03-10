@@ -1,5 +1,7 @@
 import { AlpacaBar } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/entityv2"
-import { MarketChartData } from "./market.class"
+import { MarketChartData, MarketAccountData } from "./market.class"
+import camelCase from 'lodash/camelCase'
+import mapKeys from 'lodash/mapKeys';
 
 export const transformAlpacaBar = (data: AlpacaBar): MarketChartData => ({
     symbol: data.Symbol ?? '', 
@@ -12,3 +14,7 @@ export const transformAlpacaBar = (data: AlpacaBar): MarketChartData => ({
     tradeCount: data.TradeCount,
     vwap: data.VWAP
 })
+
+export const parseAccountData = (data: any): MarketAccountData => {
+    return mapKeys(data, (value, key) => camelCase(key)) as MarketAccountData;
+}; 
