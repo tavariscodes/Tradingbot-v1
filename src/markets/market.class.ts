@@ -171,7 +171,6 @@ export class AlpacaMarket extends Market {
     }
 
     adjustToMarketHours(timespan: number): {timespan: number, startDate: Date, endDate: Date} {
-        
         const today = new Date();
         const fifteenMinsAgo = 16 * 60000
         const timespanEndDate = new Date((today.getTime() - fifteenMinsAgo));
