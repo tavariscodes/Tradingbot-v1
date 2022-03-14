@@ -10,8 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^2.12.1",
+    "bottleneck": "^2.19.5",
+    "csvtojson": "^2.0.10",
     "dotenv": "^16.0.0",
     "lodash": "^4.17.21",
+    "puppeteer": "^13.5.1",
     "ta.js": "^1.7.4"
   },
   "devDependencies": {
