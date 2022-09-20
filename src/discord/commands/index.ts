@@ -1,8 +1,10 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@discordjs/builders';
 import { Interaction } from 'discord.js';
+import { TradingBot } from '../../bot';
 
 export interface DiscordCommand { 
-    data: SlashCommandBuilder;
-    execute: (interaction: Interaction ) => void;
+    data: SlashCommandSubcommandsOnlyBuilder;
+    execute: (interaction: Interaction) => void;
 }
-export * from './watchlist';
+
+export * from './watchlist.commands';

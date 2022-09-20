@@ -5,6 +5,7 @@ export type MarketPlatform = Alpaca
 
 export interface Market {
     app: MarketPlatform;
+    name: string;
 }
 
 export interface MarketConfig {
@@ -167,7 +168,6 @@ export class AlpacaMarket extends Market {
 
     async getCalendar(query?: MarketCalendarQuery): Promise<MarketCalendar[]> {
         return query ? await this.app.getCalendar(query) : await this.app.getCalendar()
-       
     }
 
     adjustToMarketHours(timespan: number): {timespan: number, startDate: Date, endDate: Date} {

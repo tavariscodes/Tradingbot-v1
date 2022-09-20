@@ -1,15 +1,15 @@
-{
-	"extends": "eslint:recommended",
-	"env": {
-		"node": true,
-		"es6": true
+module.exports = {
+	extends: 'eslint:recommended',
+	env: {
+		node: true,
+		es6: true,
 	},
-	"parserOptions": {
-		"ecmaVersion": 2021
+	parserOptions: {
+		ecmaVersion: 2021,
 	},
-	"rules": {
-		"arrow-spacing": ["warn", { "before": true, "after": true }],
-		"brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+	rules: {
+		'arrow-spacing': ["warn", { "before": true, "after": true }],
+		'brace-style': ["error", "stroustrup", { "allowSingleLine": true }],
 		"comma-dangle": ["error", "always-multiline"],
 		"comma-spacing": "error",
 		"comma-style": "error",

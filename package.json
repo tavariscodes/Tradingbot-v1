@@ -4,6 +4,9 @@
   "description": "Trading bot implemented in js",
   "main": "index.js",
   "scripts": {
+
+    "start-discordBot": "npx ts-node src/discord/index.ts",
+    "deploy-botCommands": "npx ts-node src/discord/deploy-commands.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tavaris Johnson",
@@ -18,10 +21,14 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "lodash": "^4.17.21",
+    "mongodb": "^3.7.3",
     "puppeteer": "^13.5.1",
-    "ta.js": "^1.7.4"
+    "reflect-metadata": "^0.1.13",
+    "ta.js": "^1.7.4",
+    "typeorm": "^0.2.45"
   },
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "eslint": "^8.11.0",
     "typescript": "^4.6.2"
   },
